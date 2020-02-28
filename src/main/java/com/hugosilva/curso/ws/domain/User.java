@@ -1,9 +1,13 @@
 package com.hugosilva.curso.ws.domain;
 
+import com.hugosilva.curso.ws.dto.UserDto;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Document
 public class User implements Serializable {
@@ -14,6 +18,8 @@ public class User implements Serializable {
     private String firstName;
     private String lastName ;
     private String email;
+    @DBRef (lazy = true)
+    private List<Role> roles = new ArrayList<>();
 
     public User() {};
 
@@ -21,6 +27,20 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public User(String id, String firstName, String lastName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User(UserDto userDto) {
+        this.id = userDto.getId();
+        this.firstName = userDto.getFirstName();
+        this.lastName = userDto.getLastName();
+        this.email = userDto.getEmail();
     }
 
     public String getId() {
@@ -53,6 +73,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
