@@ -2,10 +2,11 @@ package com.hugosilva.curso.ws.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 @Document
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
 
     private static final Long serialVersionUID = 1L;
     @Id
@@ -36,4 +37,8 @@ public class Role implements Serializable {
     }
 
 
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }
